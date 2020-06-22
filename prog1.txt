@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// need to check max no. of compartments and accordingly need to add value
+#define MX 101
+
+int jackpacks[MX], dp[MX];
+
+int find_thesis_compartment(int src, int target) {
+   if (src >= target) return 0;
+
+   if (dp[src] != -1) return dp[src];
+
+   int res = MX;
+   for (int i = 1; i <= jackpacks[src]; i++) {
+   res = min(res, 1 + find_thesis_compartment(src + i, target));
+   }
+
+   return dp[src] = res;
+}
+
+
+int main() {
+    int no_comparts, thesis_comparts;
+    cout<<"no. of  compartments\n";
+    cin>>no_comparts;
+    for (int i = 1; i <= no_comparts; i++)
+    cin>>jackpacks[i];
+    cout<<"thesis  compartments input\n";
+    cin>>thesis_comparts;
+    
+    memset(dp, -1, sizeof(dp));
+    cout<<"output is:";
+    cout<<find_thesis_compartment(1, thesis_comparts)<<endl;
+    return 0;
+}
